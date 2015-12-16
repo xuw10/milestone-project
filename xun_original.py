@@ -4,8 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def main():
-    return "this is the main page!"
-#   return redirect('/index')
+  return redirect('/index')
 
 @app.route('/index')
 def index():
