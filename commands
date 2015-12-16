@@ -1,0 +1,8 @@
+heroku local
+git init
+git add .
+git commit -m "init"
+git push heroku master
+heroku ps:scale web=1
+heroku ps
+heroku open
