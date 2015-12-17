@@ -3,15 +3,19 @@
   <head>
     <meta charset='utf-8' />
     <meta http-equiv='content-type' content='text/html; charset=utf-8' />
-    <title>Welcome to xunxun87's Milestone Project Webpage!</title>
+
+    <title>Embed Demo</title>
+
     {{ js_resources|indent(4)|safe }}
+
     {{ css_resources|indent(4)|safe }}
+
     {{ plot_script|indent(4)|safe }}
+
   </head>
   <body>
     <! A simple form for changing the graph>
-    <h1> Xun's stock price query/analysis system</h1>
-    <h4> 1. Please select your settings to get desired plots of historical prices of the stock sticker, eg. AAPL.</h4>
+    <p> Select your settings: </p>
     <form name="color_button" method='GET'>
         Color: 
         <select name="color">
@@ -21,18 +25,15 @@
             <option selected="selected" value="Black">Black</option>
         </select>
         <br>
-        Stock symbol:
-        <input type="text" name= 'ticker' value="{{ ticker }}">
+        From:
+        <input type="text" name="_from" value="{{ _from }}">
         <br>
-        Type of Price:
-        <input type="text" name="typeP" value="{{ typeP }}">
-        <br>
-        <br>
-        1 for 'Open', 2 for 'Close', 3 for 'High', 4 for 'Low', 5 for 'Volume'
+        To:
+        <input type="text" name="to" value="{{ to }}">
         <br>
         <button type="submit">Submit</button>
     </form>
     {{ plot_div|indent(4)|safe }}
-    <h4>2. Statistcal Analysis of prices.</h4>
+    <p> Demonstrates some very simple embedding into a webpage</p>
   </body>
 </html>

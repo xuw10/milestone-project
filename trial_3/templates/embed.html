@@ -22,14 +22,22 @@
         </select>
         <br>
         Stock symbol:
-        <input type="text" name= 'ticker' value="{{ ticker }}">
+        <input type="text" name= 'ticker'>
         <br>
-        Type of Price:
-        <input type="text" name="typeP" value="{{ typeP }}">
+        Start date:
+        <input type="text" name="_from" value="{{ _from }}">
         <br>
+        End date:
+        <input type="text" name="to" value="{{ to }}">
         <br>
-        1 for 'Open', 2 for 'Close', 3 for 'High', 4 for 'Low', 5 for 'Volume'
-        <br>
+        <p>
+            <input type="checkbox" name='features' value='Open'>Opening price<br>
+            <input type="checkbox" name='features' value='Close'>Closing price<br>
+            <input type="checkbox" name='features' value='High'>Highest price<br>
+            <input type="checkbox" name='features' value='Low'>Lowest price<br>
+            <input type="checkbox" name='features' value='Volume'>Volume price<br>
+            <input type="checkbox" name='features' value='Adj. Close'>Adjusted closing price<br>
+       </p>
         <button type="submit">Submit</button>
     </form>
     {{ plot_div|indent(4)|safe }}
