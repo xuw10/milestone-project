@@ -1,3 +1,4 @@
+import os
 import Quandl
 import requests
 import pandas as pd
@@ -32,7 +33,8 @@ def polynomial():
     args = flask.request.args
     color = colors[getitem(args, 'color', 'Black')]
     typeP = int(getitem(args,'typeP',1))
-    ticker = str(getitem(args,'ticker','AAPL')) 
+    #ticker = str(getitem(args,'ticker','AAPL')) 
+    ticker='AAPL'
     sa = "WIKI/"
     myS=""
     myS = sa+ticker
@@ -86,15 +88,15 @@ def polynomial():
         css_resources=css_resources,
         color=color,
         _from=_from,
-        to=to,
-        ticker=ticker
+        to=to
+    #    ticker=ticker
     )
     return encode_utf8(html)
 
 
 def main():
-    #app.debug = True
-    app.run()
+	#port = int(os.environ.get("PORT", 5000))    
+	app.run(host='0.0.0.0',port=5000)
 
 if __name__ == "__main__":
     main()
