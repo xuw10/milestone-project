@@ -1,16 +1,16 @@
+import os
 import Quandl
 import requests
 import pandas as pd
 from datetime import *
 import numpy as np
 import flask
-
+from flask import request,url_for
 from bokeh.embed import components
 from bokeh.plotting import figure
 from bokeh.resources import INLINE
 from bokeh.util.string import encode_utf8
 from bokeh.plotting import *
-from bokeh.palettes import Spectral11
 app = flask.Flask(__name__)
 
 colors = {
@@ -19,14 +19,11 @@ colors = {
     'Green': '#00FF00',
     'Blue':  '#0000FF',
 }
-
-
 def getitem(obj, item, default):
     if item not in obj:
         return default
     else:
         return obj[item]
-
 
 @app.route("/")
 def polynomial():
@@ -34,18 +31,14 @@ def polynomial():
     # Grab the inputs arguments from the URL
     # This is automated by the button
     args = flask.request.args
-    #print args
-    #ticker = request.args.get('ticker') 
-    #print ticker
-    #symbol=[]
-    #symbol.append("WIKI/")
-    #symbol.append(ticker)
-    #myS=""
-    #myS.join(symbol)
-    myS = 'WIKI/AAPL'
+    color = colors[getitem(args, 'color', 'Black')]
+    typeP = int(getitem(args,'typeP',1))
+    ticker = str(getitem(args,'ticker','AAPL')) 
+    #ticker='AAPL'
+    sa = "WIKI/"
+    myS=""
+    myS = sa+ticker
     data = Quandl.get(myS,collapse='weekly')
-    
-    #data=Quandl.get("WIKI/AAPL",collapse='weekly')
     TOOLS = "pan,wheel_zoom,box_zoom,reset,resize"
     names=['Open','High','Low','Close','Volume']
     yys = []
@@ -62,14 +55,11 @@ def polynomial():
     pClose = np.array(yys[3])
     pVolume = np.array(yys[4])
    # Get all the form arguments in the url with defaults
-    color = colors[getitem(args, 'color', 'Black')]
-    _from = int(getitem(args, '_from', 0))
-    to = int(getitem(args, 'to', 10)) #need to transfrom datetime type to int??? 
-    typeP = int(getitem(args,'typeP',1))
-
+    #_from = int(getitem(args, '_from', 0))
+    #to = int(getitem(args, 'to', 10)) #need to transfrom datetime type to int??? 
     # Create a polynomial line graph
     x = list(range(_from, to + 1))
-    fig = figure(title="Historical price of a stock(from Quandl API)",tools=TOOLS,x_axis_label='date',x_axis_type='datetime')
+    fig = figure(title="Historical price of a stock(from Quandl API)",tools=TOOLS,x_axis_label='date',x_axis_type='datetime',legend=ticker)
     #fig.line(x, [i ** 2 for i in x], color=color, line_width=2)
     if typeP == 1:
         fig.line(dates,pOpen,legend="Opening price",line_width=5,line_color=color)
@@ -99,13 +89,14 @@ def polynomial():
         color=color,
         _from=_from,
         to=to
+        ticker=ticker
     )
     return encode_utf8(html)
 
 
 def main():
-    #app.debug = True
+	#port = int(os.environ.get("PORT", 5000))    
+	#app.run(host='0.0.0.0',port=5000)
     app.run()
-
 if __name__ == "__main__":
     main()

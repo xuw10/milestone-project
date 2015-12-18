@@ -10,8 +10,8 @@
   </head>
   <body>
     <! A simple form for changing the graph>
-    <h1> Xun's stock price query system</h1>
-    <h4>  Please select your settings to get desired plots of historical prices of the stock sticker, eg. AAPL.</h4>
+    <h1> Xun's stock price query/analysis system</h1>
+    <h4> 1. Please select your settings to get desired plots of historical prices of the stock sticker, eg. AAPL.</h4>
     <form name="color_button" method='GET'>
         Color: 
         <select name="color">
@@ -22,7 +22,7 @@
         </select>
         <br>
         Stock symbol:
-        <input type="text" name= 'ticker' value="{{ ticker }}">
+        <input type="text" name= 'ticker'>
         <br>
         Type of Price:
         <input type="text" name="typeP" value="{{ typeP }}">
@@ -33,5 +33,6 @@
         <button type="submit">Submit</button>
     </form>
     {{ plot_div|indent(4)|safe }}
+    <h4>2. Statistcal Analysis of prices.</h4>
   </body>
 </html>
